@@ -4,16 +4,34 @@ import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
 
 const burger = (props) => {
-  const transformedIngredients = Object.keys(props.ingredients)
+
+  let ingredientsNum = 0;
+  let transformedIngredients = Object.keys(props.ingredients)
     .map( igKey => {
-      // console.log([...Array(props.ingredients[igKey])]);
-      // if `salad: 2`, then the array is: [undefined, undefined]
       return [...Array(props.ingredients[igKey])].map((_, i) => {
-        // console.log(igKey);
-        // console.log(i);
+        ingredientsNum++;
         return <BurgerIngredient key={igKey + i} type={igKey} />
       });
     });
+
+  if (ingredientsNum === 0) {
+    transformedIngredients = <p>Please start adding ingredients!</p>
+  }
+
+  // 下面是答案写法，理解起来有点复杂其实
+  // let transformedIngredients = Object.keys(props.ingredients)
+  //   .map( igKey => {
+  //     return [...Array(props.ingredients[igKey])].map((_, i) => {
+  //       return <BurgerIngredient key={igKey + i} type={igKey} />
+  //     });
+  //   })
+  //   .reduce((arr, el) => {
+  //     return arr.concat(el);
+  //   }, []);
+  //
+  // if (transformedIngredients.length === 0) {
+  //   transformedIngredients = <p>Please start adding ingredients!</p>
+  // }
 
   return (
     <div className={styles.Burger}>
